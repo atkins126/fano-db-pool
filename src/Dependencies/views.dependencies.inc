@@ -9,3 +9,13 @@
 {%dependencies.inc}
 
 {---put your dependencies registration here---}
+
+container.add(
+    'baseTemplate',
+    TStrViewPartialFactory.create(
+        container['tplParser'] as ITemplateParser,
+        getCurrentDir() + '/src/Templates/base.template.html'
+    )
+);
+
+container.add('usrListView', TUserListingViewFactory.create());
