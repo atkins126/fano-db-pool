@@ -45,7 +45,9 @@ uses
         //container will gives you access to all registered services
         result := THomeController.create(
             container['usrListView'] as IView,
-            TViewParameters.create().setVar('baseUrl', config.getString('baseUrl')),
+            TViewParameters.create()
+                .setVar('baseUrl', config.getString('baseUrl'))
+                .setVar('appName', config.getString('appName')),
             container['userModel'] as IModelReader
         );
     end;

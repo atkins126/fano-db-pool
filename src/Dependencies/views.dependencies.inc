@@ -14,7 +14,7 @@ container.add(
     'baseTemplate',
     TStrViewPartialFactory.create(
         container['tplParser'] as ITemplateParser,
-        getCurrentDir() + '/src/Templates/base.template.html'
+        getCurrentDir() + '/resources/Templates/base.template.html'
     )
 );
 

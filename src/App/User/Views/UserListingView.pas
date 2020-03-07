@@ -58,7 +58,7 @@ uses
     begin
         userModel := usr;
         fBaseTpl := baseTpl;
-        fBaseTemplatePath := getCurrentDir() + '/src/Templates/base.template.html';
+        fBaseTemplatePath := getCurrentDir() + '/resources/Templates/base.template.html';
     end;
 
     destructor TUserListingView.destroy();
