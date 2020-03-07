@@ -9,6 +9,9 @@ unit UserListingView;
 
 interface
 
+{$MODE OBJFPC}
+{$H+}
+
 uses
 
     fano;

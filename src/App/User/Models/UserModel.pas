@@ -26,7 +26,6 @@ type
     TUserModel = class(TInjectableObject, IModelReader, IModelResultSet)
     private
         fPool : IRdbmsPool;
-        rdbmsInstance : IRdbms;
         resultSet : IRdbmsResultSet;
     public
         constructor create(const db : IRdbmsPool);
@@ -74,14 +73,11 @@ uses
     constructor TUserModel.create(const db : IRdbmsPool);
     begin
         fPool := db;
-        rdbmsInstance := fPool.acquire();
         resultSet := nil;
     end;
 
     destructor TUserModel.destroy();
     begin
-        fPool.release(rdbmsInstance);
-        rdbmsInstance := nil;
         resultSet := nil;
         fPool := nil;
         inherited destroy();
@@ -90,10 +86,17 @@ uses
     function TUserModel.read(
         const params : IModelParams = nil
     ) : IModelResultSet;
+    var
+        rdbmsInstance : IRdbms;
     begin
         {---put code to retrieve data from storage here---}
-        resultSet := rdbmsInstance.prepare('SELECT * FROM users').execute();
-        result := self;
+        rdbmsInstance := fPool.acquire();
+        try
+            resultSet := rdbmsInstance.prepare('SELECT * FROM users').execute();
+            result := self;
+        finally
+            fPool.release(rdbmsInstance);
+        end;
     end;
 
     function TUserModel.data() : IModelResultSet;
